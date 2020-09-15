@@ -6,10 +6,12 @@ using UnityEngine;
 
 public class BallMove : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // Set Variables
     Vector3 pos;
+
+    // Start is called before the first frame update
     void Start()
-    {
+    {    
 
     }
 
@@ -19,36 +21,11 @@ public class BallMove : MonoBehaviour
         //pos에 오브젝트의 위치 대입
         pos = gameObject.transform.position;
 
-        //A키를 누르고 있을 경우
-        if (Input.GetKey(KeyCode.A))
-        {
-            gameObject.transform.position = new Vector3(pos.x -= 0.01f, pos.y, pos.z);
-        }
-        //왼쪽 컨트롤 키를 누르고 있을 경우
-        if (Input.GetKey(KeyCode.LeftControl))
-        {
-            gameObject.transform.position = new Vector3(pos.x, pos.y, pos.z -= 0.01f);
-        }
-        //D키를 누르고 있을 경우
-        if (Input.GetKey(KeyCode.D))
-        {
-            gameObject.transform.position = new Vector3(pos.x += 0.01f, pos.y, pos.z);
-        }
-        //스페이스키를 누르고 있을 경우
-        if (Input.GetKey(KeyCode.Space))
-        {
-            gameObject.transform.position = new Vector3(pos.x, pos.y, pos.z += 0.01f);
-        }
-        //W키를 누르고 있을 경우
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            gameObject.transform.position = new Vector3(pos.x, pos.y += 3, pos.z);
-        }
-        //S키를 누르고 있을 경우
-        if (Input.GetKey(KeyCode.S))
-        {
-            gameObject.transform.position = new Vector3(pos.x, pos.y -= 1, pos.z);
-        }
+        //Set Direction
+        Vector3 dir = Camera.main.transform.localRotation * Vector3.forward;
+        transform.localRotation = new Quaternion(0, transform.localRotation.y,
+                                                 0, transform.localRotation.w);   //lock x and z
+        gameObject.transform.Translate(dir * 0.01f);    //Move Ball
 
         //Collision Check
         if (pos.y <= 0)
